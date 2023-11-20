@@ -21,5 +21,26 @@ public:
 
 	// sum to zoom (negative values for substraction)
 	void sumZoom(Integer _z) { z += _z; }
+
+	// allows to asign 0.5 instead of 50
+	template <typename Floating>
+	void setFloating(Floating fval)
+	{
+		static_assert(std::is_floating_point<Floating>::value,
+			"void setFloating(F fval) -> F have to be a floating point type");
+
+		Floating newValue = fval * static_cast<Floating>(100.0);
+		z = static_cast<Integer>(newValue);
+	}
+
+	// get the floating version of z (60 -> 0.6)
+	template <typename Floating>
+	Floating getFloating()
+	{
+		static_assert(std::is_floating_point<Floating>::value,
+			"F getFloating() -> F have to be a floating point type");
+
+		return static_cast<Floating>(z) / static_cast<Floating>(100.0);
+	}
 };
 } // end namespace
